@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Image, Col, Row, Button} from "react-bootstrap";
+import {Image as IMG, Col, Row, Button} from "react-bootstrap";
 import {Link, useHistory, useParams} from 'react-router-dom'
 import {
     approveBook,
@@ -17,6 +17,8 @@ import Ratings from 'react-ratings-declarative';
 import {MAIN_ROUTE, READING_ROUTE} from "../utils/consts";
 import {Context} from "../index";
 import Comments from "../components/book_comments/Comments";
+
+import default_book_pic from '../static/default_book.png';
 
 const BookPage = () => {
     const {user} = useContext(Context)
@@ -154,10 +156,10 @@ const BookPage = () => {
         <div className="mt-3">
             <Row className="ms-5 me-5">
                 <Col className="col d-flex justify-content-center mt-3">
-                    {
-                        (book.img)
-                            ? <Image width={300} height={300} src={process.env.REACT_APP_API_URL + 'images/' + book.img}/>
-                            : <Image width={300} height={300} src={process.env.REACT_APP_API_URL + 'default_book.png'}/>
+                    {(!book.imgdata) ?
+                        <IMG width={300} height={300} src={default_book_pic}/>
+                        :
+                        <IMG width={300} height={300} src={'data:image;base64,' + book.imgdata} alt="Can't download picture" />  // data:image/jpeg;base64,
                     }
                 </Col>
                 <Col className="col-6">

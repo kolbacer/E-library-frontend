@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Button, Col, Dropdown, Form, Image, Row} from 'react-bootstrap';
+import {Button, Col, Dropdown, Form, Image as IMG, Row} from 'react-bootstrap';
 import {useParams} from "react-router-dom";
 import {BOOK_ROUTE} from "../utils/consts";
 import {
@@ -15,6 +15,8 @@ import FindUser from "../components/FindUser";
 import {observer} from "mobx-react-lite";
 import ChangePassword from "../components/modals/ChangePassword";
 import CreateBook from "../components/modals/CreateBook";
+
+import default_user_pic from '../static/default_user.png';
 
 const UserPage = observer( () => {
     const {user} = useContext(Context)
@@ -101,10 +103,10 @@ const UserPage = observer( () => {
             <h2 className="d-flex justify-content-center mt-3">{showedUser.name}</h2>
             <Row className="d-flex flex-row">
                 <Col md={4} className="d-flex justify-content-center">
-                    {
-                        (showedUser.img)
-                            ? <Image width={300} height={300} src={process.env.REACT_APP_API_URL + 'user_images/' + showedUser.img}/>
-                            : <Image width={300} height={300} src={process.env.REACT_APP_API_URL + 'default_user.png'}/>
+                    {(!showedUser.imgdata) ?
+                        <IMG width={300} height={300} src={default_user_pic}/>
+                        :
+                        <IMG width={300} height={300} src={'data:image;base64,' + showedUser.imgdata} alt="Can't download picture" /> // data:image/jpeg;base64,
                     }
                 </Col>
                 <Col md={4} className="d-flex flex-column">
